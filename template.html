@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" id="htmlRoot">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>المرصد — أخبار العالم</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Noto+Kufi+Arabic:wght@400;500;600;700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#EFE9DD; --paper-2:#E5DECE; --ink:#20242B; --ink-soft:#565048; --line:#C9C0AC; --card:#F7F3E9;
+    --c-politics:#A1352B; --c-ai:#2A4B8D; --c-business:#8A6D1F; --c-sports:#2F5233; --c-world:#6B4E71;
+    --c-military:#4A4238; --c-cooperation:#1F7A6C;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#1B1912; --paper-2:#242018; --ink:#EFE9DD; --ink-soft:#B8AF9C; --line:#3E392C; --card:#242018;
+      --c-ai:#7FA0E0; --c-politics:#D97F72; --c-business:#D8B84E; --c-sports:#7CB88F; --c-world:#B79BC0;
+      --c-military:#C7BCA8; --c-cooperation:#5FC9B4;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#1B1912; --paper-2:#242018; --ink:#EFE9DD; --ink-soft:#B8AF9C; --line:#3E392C; --card:#242018;
+    --c-ai:#7FA0E0; --c-politics:#D97F72; --c-business:#D8B84E; --c-sports:#7CB88F; --c-world:#B79BC0;
+    --c-military:#C7BCA8; --c-cooperation:#5FC9B4;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{background:var(--paper);color:var(--ink);font-family:'Noto Kufi Arabic','Work Sans',sans-serif;line-height:1.5;min-height:100vh;}
+  html[lang="en"] body{font-family:'Work Sans',sans-serif;}
+  a{color:inherit;text-decoration:none;}
+  select,input,button{font-family:inherit;}
+  .wrap{max-width:1150px;margin:0 auto;padding:0 20px;}
+  header.masthead{border-bottom:3px solid var(--ink);padding:22px 0 14px;}
+  .masthead-row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+  .logo{font-family:'Fraunces',serif;font-weight:700;font-style:italic;font-size:clamp(28px,5.5vw,42px);}
+  .controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+  .pill-select, .theme-btn{border:1px solid var(--line);background:var(--card);color:var(--ink);padding:6px 10px;border-radius:20px;font-size:12.5px;cursor:pointer;}
+  .snap-badge{background:var(--card);border:1px solid var(--line);padding:4px 10px;border-radius:20px;font-size:12px;color:var(--ink-soft);}
+  .search-row{padding:14px 0;border-bottom:1px solid var(--line);}
+  .search-box{display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--line);border-radius:24px;padding:9px 16px;max-width:520px;}
+  .search-box input{border:none;background:none;outline:none;color:var(--ink);font-size:14.5px;width:100%;}
+  .search-box input::placeholder{color:var(--ink-soft);}
+  nav.cats{position:sticky;top:0;z-index:10;background:var(--paper);border-bottom:1px solid var(--line);overflow-x:auto;white-space:nowrap;scrollbar-width:none;}
+  nav.cats::-webkit-scrollbar{display:none;}
+  nav.cats .wrap{display:flex;gap:4px;}
+  .cat-btn{padding:14px 15px;font-size:13.5px;font-weight:600;border:none;background:none;color:var(--ink-soft);cursor:pointer;border-bottom:3px solid transparent;font-family:inherit;flex-shrink:0;}
+  .cat-btn[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--dot,var(--ink));}
+  .cat-btn .dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-inline-start:6px;background:var(--dot,var(--ink));}
+  main{padding:24px 0 80px;}
+  #status{font-size:13.5px;color:var(--ink-soft);padding:10px 0 4px;}
+  .priority-note{font-size:12.5px;color:var(--ink-soft);background:var(--card);border:1px dashed var(--line);border-radius:8px;padding:8px 12px;margin:8px 0 18px;}
+  .section-title{font-family:'Fraunces',serif;font-style:italic;font-size:21px;margin:30px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px;}
+  .section-title .dot{width:10px;height:10px;border-radius:50%;background:var(--dot);}
+  .river{display:flex;flex-direction:column;}
+  .story{display:grid;gap:6px;padding:15px 0;border-bottom:1px solid var(--line);border-inline-start:3px solid var(--dot);padding-inline-start:15px;}
+  .story:hover .story-title{text-decoration:underline;text-underline-offset:3px;}
+  .story-title{font-size:17.5px;font-weight:600;line-height:1.4;}
+  .story-desc{font-size:14px;color:var(--ink-soft);}
+  .story-foot{font-size:12px;color:var(--ink-soft);display:flex;gap:10px;align-items:center;margin-top:2px;}
+  .story-foot .src{font-weight:600;}
+  .home-flag{font-size:11px;background:var(--dot);color:var(--paper);padding:1px 8px;border-radius:10px;font-weight:600;}
+  .empty{text-align:center;padding:50px 20px;color:var(--ink-soft);font-size:14px;}
+  footer{border-top:1px solid var(--line);padding:22px 0 40px;font-size:12px;color:var(--ink-soft);}
+  @media (max-width:600px){.story-title{font-size:16px;} .logo{font-size:26px;} .controls{width:100%;justify-content:flex-start;}}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap masthead-row">
+    <div class="logo" id="logoText">المرصد</div>
+    <div class="controls">
+      <span class="snap-badge" id="snapBadge"></span>
+      <select class="pill-select" id="countrySelect"></select>
+      <select class="pill-select" id="langSelect">
+        <option value="ar">العربية</option>
+        <option value="en">English</option>
+      </select>
+      <button class="theme-btn" id="themeToggle">🌙</button>
+    </div>
+  </div>
+</header>
+
+<div class="search-row">
+  <div class="wrap">
+    <div class="search-box">
+      <span>🔍</span>
+      <input type="text" id="searchInput" placeholder="">
+    </div>
+  </div>
+</div>
+
+<nav class="cats" id="catNav"></nav>
+
+<main class="wrap">
+  <div id="status"></div>
+  <div id="content"></div>
+</main>
+
+<footer class="wrap" id="footerText"></footer>
+
+<script>
+const UPDATED_AT = "__UPDATED_AT__";
+const ARTICLES = __ARTICLES_JSON__;      /* { en: {cat:[...]}, ar: {cat:[...]} } */
+const COUNTRIES = __COUNTRIES_JSON__;    /* [{code,ar,en}] */
+
+const UI = {
+  ar: {
+    title: "المرصد — أخبار العالم", logo: "المرصد",
+    searchPlaceholder: "ابحث في كل الأخبار…", all: "الكل",
+    footer: "المرصد يجمع عناوين وملخصات أخبار من مصادر RSS عامة تلقائيًا كل يوم، ويحيل القارئ للمصدر الأصلي لقراءة الخبر كاملاً.",
+    priorityNote: (name) => `تم ترتيب الأخبار المتعلقة بـ${name} في الأعلى ضمن كل قسم.`,
+    countryDefault: "بدون تفضيل دولة",
+    searchResults: (n) => `نتائج البحث (${n})`,
+    noResults: "مفيش نتائج مطابقة للبحث.",
+    homeFlag: "يخصّك",
+    updated: (t) => `آخر تحديث تلقائي: ${t}`,
+  },
+  en: {
+    title: "The Observer — World News", logo: "The Observer",
+    searchPlaceholder: "Search all news…", all: "All",
+    footer: "The Observer automatically collects headlines and summaries from public RSS sources every day, and links readers to the original source for the full story.",
+    priorityNote: (name) => `News related to ${name} has been moved to the top within each section.`,
+    countryDefault: "No country preference",
+    searchResults: (n) => `Search results (${n})`,
+    noResults: "No matching results.",
+    homeFlag: "For you",
+    updated: (t) => `Last auto-update: ${t}`,
+  }
+};
+
+const CATEGORIES = [
+  { id:"politics",    ar:"سياسة",            en:"Politics",   color:"var(--c-politics)" },
+  { id:"military",    ar:"شؤون عسكرية",      en:"Military",   color:"var(--c-military)" },
+  { id:"cooperation", ar:"تعاونات واتفاقيات", en:"Agreements", color:"var(--c-cooperation)" },
+  { id:"ai",          ar:"ذكاء اصطناعي",     en:"AI",         color:"var(--c-ai)" },
+  { id:"business",    ar:"بورصة واقتصاد",    en:"Business",   color:"var(--c-business)" },
+  { id:"sports",      ar:"رياضة",            en:"Sports",     color:"var(--c-sports)" },
+  { id:"world",       ar:"العالم",           en:"World",      color:"var(--c-world)" },
+];
+
+const state = { active:"all", lang:"ar", country:"", query:"" };
+try {
+  const savedLang = localStorage.getItem("almirsad_lang");
+  const savedCountry = localStorage.getItem("almirsad_country");
+  if (savedLang) state.lang = savedLang;
+  if (savedCountry) state.country = savedCountry;
+} catch(e){}
+
+function t(key, ...args){ const v = UI[state.lang][key]; return typeof v === "function" ? v(...args) : v; }
+function catLabel(cat){ return state.lang === "ar" ? cat.ar : cat.en; }
+function countryName(code){ const c = COUNTRIES.find(x=>x.code===code); return c ? (state.lang==="ar"?c.ar:c.en) : code; }
+
+function applyLang(){
+  const root = document.getElementById("htmlRoot");
+  root.setAttribute("lang", state.lang);
+  root.setAttribute("dir", state.lang === "ar" ? "rtl" : "ltr");
+  document.title = t("title");
+  document.getElementById("logoText").textContent = t("logo");
+  document.getElementById("snapBadge").textContent = t("updated", UPDATED_AT);
+  document.getElementById("searchInput").placeholder = t("searchPlaceholder");
+  document.getElementById("footerText").textContent = t("footer");
+  document.getElementById("langSelect").value = state.lang;
+  buildCountrySelect();
+  buildNav();
+  render();
+}
+
+function buildCountrySelect(){
+  const sel = document.getElementById("countrySelect");
+  sel.innerHTML = "";
+  const optDefault = document.createElement("option");
+  optDefault.value = ""; optDefault.textContent = t("countryDefault");
+  sel.appendChild(optDefault);
+  COUNTRIES.forEach(c => {
+    const o = document.createElement("option");
+    o.value = c.code; o.textContent = state.lang === "ar" ? c.ar : c.en;
+    sel.appendChild(o);
+  });
+  sel.value = state.country;
+}
+
+function buildNav(){
+  const nav = document.getElementById("catNav");
+  nav.innerHTML = "";
+  const wrapDiv = document.createElement("div");
+  wrapDiv.className = "wrap"; wrapDiv.style.display = "flex";
+  const btnAll = document.createElement("button");
+  btnAll.className = "cat-btn"; btnAll.textContent = t("all"); btnAll.dataset.id = "all";
+  wrapDiv.appendChild(btnAll);
+  CATEGORIES.forEach(c => {
+    const b = document.createElement("button");
+    b.className = "cat-btn"; b.dataset.id = c.id;
+    b.style.setProperty("--dot", c.color);
+    b.innerHTML = catLabel(c) + '<span class="dot"></span>';
+    wrapDiv.appendChild(b);
+  });
+  nav.appendChild(wrapDiv);
+  nav.querySelectorAll(".cat-btn").forEach(b => {
+    b.addEventListener("click", () => { state.active = b.dataset.id; updateNavSelection(); render(); });
+  });
+  updateNavSelection();
+}
+function updateNavSelection(){
+  document.querySelectorAll(".cat-btn").forEach(b => b.setAttribute("aria-selected", String(b.dataset.id === state.active)));
+}
+
+function sortByCountry(items){
+  if (!state.country) return items;
+  const withFlag = items.map((it,i) => ({ it, i, match: (it.countries||[]).includes(state.country) }));
+  withFlag.sort((a,b) => (b.match - a.match) || (a.i - b.i));
+  return withFlag.map(x => x.it);
+}
+function matchesQuery(it, q){
+  return (it.title||"").toLowerCase().includes(q) || (it.desc||"").toLowerCase().includes(q);
+}
+function renderStory(it, cat){
+  const a = document.createElement("a");
+  a.href = it.link; a.target = "_blank"; a.rel = "noopener noreferrer";
+  a.className = "story"; a.style.setProperty("--dot", cat.color);
+  const flagged = state.country && (it.countries||[]).includes(state.country);
+  a.innerHTML = `
+    <div class="story-title">${it.title} ${flagged ? `<span class="home-flag">${t("homeFlag")}</span>` : ""}</div>
+    <div class="story-desc">${it.desc}</div>
+    <div class="story-foot"><span class="src">${it.source}</span></div>`;
+  return a;
+}
+
+function render(){
+  const content = document.getElementById("content");
+  const status = document.getElementById("status");
+  content.innerHTML = ""; status.innerHTML = "";
+  const pool = ARTICLES[state.lang] || {};
+  const q = state.query.trim().toLowerCase();
+
+  if (q){
+    let results = [];
+    CATEGORIES.forEach(cat => (pool[cat.id]||[]).forEach(it => { if (matchesQuery(it,q)) results.push({it,cat}); }));
+    status.textContent = t("searchResults", results.length);
+    if (results.length === 0){ content.innerHTML = `<div class="empty">${t("noResults")}</div>`; return; }
+    const river = document.createElement("div"); river.className = "river";
+    results.forEach(({it,cat}) => river.appendChild(renderStory(it, cat)));
+    content.appendChild(river);
+    return;
+  }
+
+  if (state.country){
+    const note = document.createElement("div");
+    note.className = "priority-note";
+    note.textContent = t("priorityNote", countryName(state.country));
+    content.appendChild(note);
+  }
+
+  const catsToShow = state.active === "all" ? CATEGORIES : CATEGORIES.filter(c => c.id === state.active);
+  let any = false;
+  catsToShow.forEach(cat => {
+    let items = pool[cat.id] || [];
+    if (items.length === 0) return;
+    any = true;
+    items = sortByCountry(items);
+    const title = document.createElement("div");
+    title.className = "section-title"; title.style.setProperty("--dot", cat.color);
+    title.innerHTML = `<span class="dot"></span> ${catLabel(cat)}`;
+    content.appendChild(title);
+    const river = document.createElement("div"); river.className = "river";
+    items.forEach(it => river.appendChild(renderStory(it, cat)));
+    content.appendChild(river);
+  });
+  if (!any) content.innerHTML = `<div class="empty">${t("noResults")}</div>`;
+}
+
+document.getElementById("langSelect").addEventListener("change", (e) => {
+  state.lang = e.target.value;
+  try{ localStorage.setItem("almirsad_lang", state.lang); }catch(err){}
+  applyLang();
+});
+document.getElementById("countrySelect").addEventListener("change", (e) => {
+  state.country = e.target.value;
+  try{ localStorage.setItem("almirsad_country", state.country); }catch(err){}
+  render();
+});
+document.getElementById("searchInput").addEventListener("input", (e) => { state.query = e.target.value; render(); });
+document.getElementById("themeToggle").addEventListener("click", () => {
+  const cur = document.documentElement.getAttribute("data-theme");
+  const next = cur === "dark" ? "light" : "dark";
+  document.documentElement.setAttribute("data-theme", next);
+  try{ localStorage.setItem("almirsad_theme", next); }catch(e){}
+});
+try {
+  const savedTheme = localStorage.getItem("almirsad_theme");
+  if (savedTheme) document.documentElement.setAttribute("data-theme", savedTheme);
+} catch(e){}
+
+applyLang();
+</script>
+</body>
+</html>
